@@ -1,0 +1,16 @@
+{
+  "name": "solscan-nft-transaction-history",
+  "version": "1.0.0",
+  "description": "Script para buscar o histórico de transações de um NFT do Star Atlas via Solscan",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "csv-parser": "^3.0.0",
+    "csv-writer": "^1.6.0",
+    "node-fetch": "^3.3.2",
+    "papaparse": "^5.4.1"
+  }
+}

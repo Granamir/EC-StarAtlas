@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NFT Data Table</title>
+  <style>
+    /* Fundo com imagem */
+    body {
+      background-image: url("https://i.imgur.com/UQWwqvT.jpg");
+      background-size: cover;
+      background-attachment: fixed;
+      font-family: Arial, sans-serif;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+      overflow: auto;
+    }
+
+    /* Título */
+    h1 {
+      text-align: center;
+      color: #ffffff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      background: rgba(30, 30, 30, 0.8);
+      margin: 0;
+    }
+
+    /* Estilo da tabela */
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      color: #ffffff;
+      background-color: rgba(30, 30, 30, 0.6); /* Fundo transparente */
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid rgba(255, 255, 255, 0.2); /* Borda branca transparente */
+      white-space: nowrap; /* Ajuste automático para cada coluna */
+    }
+
+    /* Cabeçalho com fundo cinza escuro e texto branco */
+    th {
+      background-color: #333333;
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    /* Linhas alternadas com leve transparência */
+    tr:nth-child(even) {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    tr:nth-child(odd) {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Sombra para melhorar a visibilidade */
+    table {
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <h1>NFT Data Table</h1>
+  <table id="nftTable">
+    <thead>
+      <tr>
+        <th>Mint Asset</th>
+        <th>Name</th>
+        <th>Currency</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    async function loadNFTData() {
+      try {
+        const response = await fetch("nftsData.json");
+        if (!response.ok) throw new Error("Erro ao carregar o arquivo JSON");
+
+        const data = await response.json();
+        const tableBody = document.querySelector("#nftTable tbody");
+
+        // Itera sobre cada NFT e insere na tabela
+        Object.values(data).forEach(nft => {
+          const currency = nft[0]?.currency === "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx" ? "Atlas" : nft[0]?.currency || "N/A";
+          
+          // Converte o valor de price para número
+          const price = nft[0]?.price ? Number(nft[0].price) : "N/A";
+
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${nft.mintAsset || "N/A"}</td>
+            <td>${nft.name || "N/A"}</td>
+            <td>${currency}</td>
+            <td>${price}</td>
+          `;
+          tableBody.appendChild(row);
+        });
+      } catch (error) {
+        console.error("Erro ao carregar os dados dos NFTs:", error);
+      }
+    }
+
+    // Carregar os dados quando a página é carregada
+    document.addEventListener("DOMContentLoaded", loadNFTData);
+  </script>
+</body>
+</html>
