@@ -93,8 +93,8 @@
         Object.values(data).forEach(nft => {
           const currency = nft[0]?.currency === "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx" ? "Atlas" : nft[0]?.currency || "N/A";
           
-          // Converte o valor de price para número
-          const price = nft[0]?.price ? Number(nft[0].price) : "N/A";
+          // Converte o valor de price para número com 8 casas decimais e substitui ponto por vírgula
+          const price = nft[0]?.price ? Number(nft[0].price).toFixed(8).replace('.', ',') : "N/A";
 
           const row = document.createElement("tr");
           row.innerHTML = `
