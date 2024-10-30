@@ -92,11 +92,8 @@
         Object.values(data).forEach(nft => {
           const currency = nft[0]?.currency === "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx" ? "Atlas" : nft[0]?.currency || "N/A";
           
-          // Aplica formatação condicional para 8 casas decimais se < 0, ou 2 casas decimais se >= 0
-          let price = nft[0]?.price ? Number(nft[0].price) : "N/A";
-          price = typeof price === 'number' 
-            ? (price < 0 ? price.toFixed(8).replace('.', ',') : price.toFixed(2).replace('.', ','))
-            : "N/A";
+          // Converte o valor de price para número e formata com 8 casas decimais
+          const price = nft[0]?.price ? Number(nft[0].price).toFixed(8).replace('.', ',') : "N/A";
 
           const row = document.createElement("tr");
           row.innerHTML = `
